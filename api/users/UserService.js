@@ -1,5 +1,11 @@
 const db = require("../../config/db");
 
+if (db) {
+    console.log("DB connected");
+} else {
+    console.log("Fail to connect the DB");
+}
+
 module.exports = {
     create: (data, callback) => {
         var register_data = {
@@ -31,8 +37,7 @@ module.exports = {
     },
     getUserById: (id_account, callback) => {
         db.query(
-            `SELECT id_account, first_name, last_name, class, email FROM register WHERE id_account = ?`,
-            [id_account],
+            `SELECT id_account, first_name, last_name, class, email FROM register WHERE id_account = ${id_account}`,
             (err, results, fields) => {
                 if (err) return callback(err);
                 return callback(null, results[0]);
@@ -79,6 +84,22 @@ module.exports = {
             (err, results, fields) => {
                 if (err) return callback(err);
                 return callback(null, results[0]);
+            }
+        );
+    },
+    addItem: (data, callback) => {
+        var data_item = {
+            owner: data.owner,
+            item_name: data.item_name,
+            price: data.price
+        };
+
+        db.query(
+            `INSERT INTO items SET ?`,
+            data_item,
+            (err, results, fields) => {
+                if (err) return callback(err);
+                return callback(null, results);
             }
         );
     }

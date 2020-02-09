@@ -102,5 +102,52 @@ module.exports = {
                 return callback(null, results);
             }
         );
+    },
+    addItemAmount: (data, callback) => {
+        var data_amount = {
+            item_name: data.item_name,
+            item_amount: data.item_count
+        };
+
+        db.query(
+            `INSERT INTO storage (item_name, item_count) SELECT item_name, ${data_amount.item_amount} FROM items WHERE item_name = "${data_amount.item_name}"`,
+            (err, results, fields) => {
+                if (err) return callback(err);
+                return callback(null, results);
+            }
+        );
+    },
+    reduceStorage: (data, callback) => {
+        var data_reduce = {
+            item_name: data.item_name,
+            item_amount: data.item_amount
+        };
+
+        console.log(data_reduce);
+
+        db.query(
+            `SELECT FROM storage WHERE item_name = "${data_reduce.item_name}"`,
+            (err, results, fields) => {
+                if (results.item_amount < data_reduce.item_amount) {
+                    return callback("Terlalu banyak, gagal mengambil");
+                }
+
+                var amount_now = results.item_amount - data_reduce.item_amount;
+
+                var new_data = {
+                    item_name: results.item_name,
+                    item_amount: amount_now
+                };
+
+                db.query(
+                    `UPDATE storage SET item_count = ? WHERE item_name = ${new_data.item_name}`,
+                    [new_data.item_amount],
+                    (err, results, fields) => {
+                        if (err) return callback(err);
+                        return callback(null, results);
+                    }
+                );
+            }
+        );
     }
 };

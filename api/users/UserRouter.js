@@ -5,7 +5,8 @@ const {
     updateUsers,
     deleteUser,
     login,
-    addItems
+    addItems,
+    addItemAmount
 } = require("./UserController");
 const users = require("express").Router();
 const { checkToken } = require("../../auth/TokenValidation");
@@ -22,6 +23,8 @@ users.delete("/:id", checkToken, deleteUser);
 
 users.post("/login", login);
 
-users.post("/additem", addItems);
+users.post("/additem", checkToken, addItems);
+
+users.post("/additem/amount", checkToken, addItemAmount);
 
 module.exports = users;

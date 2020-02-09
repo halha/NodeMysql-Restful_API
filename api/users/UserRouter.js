@@ -6,7 +6,8 @@ const {
     deleteUser,
     login,
     addItems,
-    addItemAmount
+    addItemAmount,
+    reduceStorage
 } = require("./UserController");
 const users = require("express").Router();
 const { checkToken } = require("../../auth/TokenValidation");
@@ -25,6 +26,8 @@ users.post("/login", login);
 
 users.post("/additem", checkToken, addItems);
 
-users.post("/additem/amount", checkToken, addItemAmount);
+users.post("/additem/addamount", checkToken, addItemAmount);
+
+users.post("/additem/reduceamount", checkToken, reduceStorage);
 
 module.exports = users;

@@ -24,10 +24,10 @@ users.delete("/:id", checkToken, deleteUser);
 
 users.post("/login", login);
 
-users.post("/additem", checkToken, addItems);
+users.post("/item/addnew", checkToken, addItems);
 
-users.post("/additem/addamount", checkToken, addItemAmount);
+users.post("/item/addamount", checkToken, addItemAmount);
 
-users.post("/additem/reduceamount", checkToken, reduceStorage);
+users.post("/item/reduceamount", checkToken, reduceStorage);
 
 module.exports = users;

@@ -1,5 +1,6 @@
 const { verify } = require("jsonwebtoken");
 
+// TODO: fix tokenValidation error
 module.exports = {
     checkToken: (req, res, next) => {
         let token = req.get("authorization");

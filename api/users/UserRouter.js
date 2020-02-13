@@ -9,6 +9,7 @@ const {
 const users = require("express").Router();
 const { checkToken } = require("../../auth/TokenValidation");
 
+// TODO: fix tokenValidation error
 users.post("/", checkToken, createUser);
 
 users.get("/", checkToken, getUsers);

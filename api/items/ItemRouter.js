@@ -4,8 +4,8 @@ const { checkToken } = require("../../auth/TokenValidation");
 
 items.post("/", addItem);
 
-items.get("/", getItems);
+items.get("/", checkToken, getItems);
 
-items.patch("/", updateItems);
+items.patch("/", checkToken, updateItems);
 
-export default items;
+module.exports = items;

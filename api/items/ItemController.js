@@ -1,44 +1,32 @@
 const { add, get, update } = require("./ItemServices");
+const { checkToken } = require("../../auth/TokenValidation");
 
 module.exports = {
     addItem: (req, res) => {
         const body = req.body;
-        let token = req.get("authorization");
 
-        if (token) {
-            token = token.slice(7);
+        checkToken(req, res, results => {
+            var data_item = {
+                owner: results.first_name,
+                item_name: body.item_name,
+                item_amount: body.item_amount,
+                price: body.price
+            };
 
-            verify(token, process.env.JWT_KEY, (err, decoded) => {
-                if (err || decoded.result == undefined) {
-                    res.json({
+            add(data_item, (err, results) => {
+                if (err) {
+                    return res.status(500).json({
                         success: 0,
-                        message: "Invalid token!"
-                    });
-                } else {
-                    var data_decoded = decoded.result;
-                    var data_item = {
-                        owner: data_decoded.first_name,
-                        item_name: body.item_name,
-                        price: body.price
-                    };
-
-                    add(data_item, (err, results) => {
-                        if (err) {
-                            console.log(err);
-                            return res.status(500).json({
-                                success: 0,
-                                message: "Database connection error!"
-                            });
-                        }
-                        return res.status(200).json({
-                            success: 1,
-                            message: "Item added successfully",
-                            data: results
-                        });
+                        message: "Database connection error!"
                     });
                 }
+                return res.status(200).json({
+                    success: 1,
+                    message: "Item added successfully",
+                    data: results
+                });
             });
-        }
+        });
     },
     getItems: (req, res) => {
         const body = req.body;

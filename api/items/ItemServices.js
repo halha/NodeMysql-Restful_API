@@ -11,6 +11,7 @@ module.exports = {
         var data_item = {
             owner: data.owner,
             item_name: data.item_name,
+            item_amount: data.item_amount,
             price: data.price
         };
 

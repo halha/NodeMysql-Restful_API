@@ -12,7 +12,7 @@ module.exports = {
                         message: "Invalid token!"
                     });
                 } else {
-                    next();
+                    next(decoded.result);
                 }
             });
         } else {

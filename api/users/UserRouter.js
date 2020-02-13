@@ -4,10 +4,7 @@ const {
     getUsers,
     updateUsers,
     deleteUser,
-    login,
-    addItems,
-    addItemAmount,
-    reduceStorage
+    login
 } = require("./UserController");
 const users = require("express").Router();
 const { checkToken } = require("../../auth/TokenValidation");
@@ -23,11 +20,5 @@ users.patch("/", checkToken, updateUsers);
 users.delete("/:id", checkToken, deleteUser);
 
 users.post("/login", login);
-
-users.post("/item/addnew", checkToken, addItems);
-
-users.post("/item/addamount", checkToken, addItemAmount);
-
-users.post("/item/reduceamount", checkToken, reduceStorage);
 
 module.exports = users;

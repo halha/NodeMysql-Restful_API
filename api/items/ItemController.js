@@ -1,5 +1,7 @@
+const { add, get, update } = require("./ItemServices");
+
 module.exports = {
-    addItems: (req, res) => {
+    addItem: (req, res) => {
         const body = req.body;
         let token = req.get("authorization");
 
@@ -20,7 +22,7 @@ module.exports = {
                         price: body.price
                     };
 
-                    addItem(data_item, (err, results) => {
+                    add(data_item, (err, results) => {
                         if (err) {
                             console.log(err);
                             return res.status(500).json({
@@ -38,9 +40,9 @@ module.exports = {
             });
         }
     },
-    addItemAmount: (req, res) => {
+    getItems: (req, res) => {
         const body = req.body;
-        addItemAmount(body, (err, results) => {
+        get(body, (err, results) => {
             if (err) {
                 return res.status(500).json({
                     success: 0,
@@ -53,9 +55,9 @@ module.exports = {
             });
         });
     },
-    reduceStorage: (req, res) => {
+    updateItems: (req, res) => {
         const body = req.body;
-        reduceStorage(body, (err, results) => {
+        update(body, (err, results) => {
             if (err) {
                 console.log(err);
                 return res.status(500).json({

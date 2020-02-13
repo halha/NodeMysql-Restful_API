@@ -7,7 +7,7 @@ if (db) {
 }
 
 module.exports = {
-    addItem: (data, callback) => {
+    add: (data, callback) => {
         var data_item = {
             owner: data.owner,
             item_name: data.item_name,
@@ -23,7 +23,7 @@ module.exports = {
             }
         );
     },
-    addItemAmount: (data, callback) => {
+    get: (data, callback) => {
         var data_amount = {
             item_name: data.item_name,
             item_amount: data.item_amount
@@ -37,7 +37,7 @@ module.exports = {
             }
         );
     },
-    reduceStorage: (data, callback) => {
+    update: (data, callback) => {
         var data_reduce = {
             item_name: data.item_name,
             item_amount: data.item_amount
